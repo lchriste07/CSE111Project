@@ -1,0 +1,30 @@
+{
+  "name": "expressjs-multi-page-site-demo",
+  "version": "1.0.0",
+  "description": "An Express.js app that uses a very simple example of Express page routing.",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server",
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autumnchris/expressjs-multi-page-site-demo.git"
+  },
+  "author": "autumnchris",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/autumnchris/expressjs-multi-page-site-demo/issues"
+  },
+  "homepage": "https://autumnchris-express-site-demo.herokuapp.com",
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.1",
+    "hbs": "^4.2.0",
+    "sqlite3": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
