@@ -21,7 +21,7 @@ const port = "8000";
  */
 
  app.set("views", path.join(__dirname, "views"));
- app.set("view engine", "hbs");
+ app.set("view engine", "ejs");
  app.use(express.static(path.join(__dirname, "public")));
  app.use(express.urlencoded({ extended: false }));
  app.use(express.json());
@@ -41,10 +41,16 @@ const port = "8000";
  }); 
  
  
- app.get("/", (req, res) => {
-   res.render("index");
- });
+ app.get("/",function(req, res, next) {
+  var sql='SELECT * FROM account';
+  db.all(sql, function (err, data) {
+  if (err) throw err;
+  res.render('index', { title: 'User List', index: data});
+});
+});
  
+
+
  app.post("/", (req, res) => {
   
      let sql = `SELECT * FROM account`;
@@ -52,15 +58,11 @@ const port = "8000";
        if (err) {
          throw err;
        }
-       rows.forEach((row) => {
-         console.log(row);
-       });
+      
      });
    
      const { emailAddress } = req.body;
-         return res.render("index" , {
-           emailAddress : emailAddress
-         })
+         return res.render("index" , { title: 'index', userData: rows})
     
  
  
