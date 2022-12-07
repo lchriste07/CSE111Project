@@ -6,7 +6,7 @@
 
  const express = require("express");
  const path = require("path");
-
+const alert = require("alert")
 
  
  /**
@@ -41,51 +41,78 @@ const port = "8000";
  }); 
  
  
- app.get("/",function(req, res, next) {
-  var sql='SELECT * FROM account';
+ // Home Page
+ app.get("/",function(req, res) {
+  res.render('index');
+});
+ 
+ // Get list of all matches from the rated section
+ app.get("/matchlist", (req, res) => {
+  let sql = `SELECT * FROM rated_matches limit 200`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      throw err;
+    }
+    return res.render("matchlist" , { title: 'index', index: rows})
+  });
+ });
+
+
+
+
+
+ 
+ app.get("/account", (req, res) => {
+   res.render("account");
+ });
+
+ //Once we get the ID it will render the section with 
+ app.post("/account", (req, res) => {
+  // Query for the account and get the information from the account and fill out a table. 
+    const {emailAddress} = req.body;
+    var sql="SELECT * FROM account WHERE acc_accountid = ? limit 1";
+    db.all(sql, [emailAddress] ,(err, data) =>{
+      if (err) throw err;
+      if (err){
+        alert("Invalid Login Credentials");
+         return res.render("account");
+      }
+      if(data[0].acc_accountid === emailAddress){
+         res.render("editInfo", { title: 'index', index: data});
+      }
+      
+    });
+
+
+  res.render("editinfo");
+});
+
+app.post("/editinfo", (req, res) => {
+  // Query for the account and get the information from the account and fill out a table. 
+
+
+
+  res.render("index");
+  alert("Thank for editing your info!")
+});
+ 
+
+app.get("/openings",function(req, res) {
+  var sql='SELECT * FROM opening limit 200';
   db.all(sql, function (err, data) {
   if (err) throw err;
-  res.render('index', { title: 'User List', index: data});
+  res.render('opening', { title: 'Opening List', index: data});
 });
-});
+ });
  
 
-
- app.post("/", (req, res) => {
-  
-     let sql = `SELECT * FROM account`;
-     db.all(sql, [], (err, rows) => {
-       if (err) {
-         throw err;
-       }
-      
-     });
-   
-     const { emailAddress } = req.body;
-         return res.render("index" , { title: 'index', userData: rows})
-    
- 
- 
- });
- 
- app.get("/register", (req, res) => {
-   res.render("register");
- });
- 
- app.get("/login", (req, res) => {
-   res.render("login");
- });
- 
- app.get("/editInfo", (req, res) => {
-   res.render("editInfo");
- });
- 
- app.get("/recovery", (req, res) => {
-   res.render("recovery");
- });
- 
- app.get("/recoveryInput", (req, res) => {
-   res.render("recoveryInput");
+ // Upon landing on the leaderboard tab prints the leaderboards for top 200
+ app.get("/leaderboard", (req, res) => {
+  var sql='SELECT * FROM leaderboard GROUP BY lb_overall_winrate ORDER BY lb_overall_winrate DESC Limit 200';
+  db.all(sql, function (err, data) {
+  if (err) throw err;
+  res.render('leaderboard', { title: 'Leaderboard Ranking', index: data});
+});
  });
  
  
