@@ -202,7 +202,7 @@ app.get("/matchhistoryrated", (req, res) => {
         if (err) throw err;
         console.log(balance.acc_balance);
         var sql = `UPDATE account SET acc_balance = ? WHERE acc_accountid = ?`;
-        db.run(sql, [ balance[0] - (2 * amount), ID], (err, money) => {
+        db.run(sql, [ balance.acc_balance - (2 * amount), ID], (err, money) => {
           if (err) throw err;
           alert("Sorr that you lost the bet...Better luck next time!!!");
         });
@@ -211,58 +211,10 @@ app.get("/matchhistoryrated", (req, res) => {
     return res.redirect("/makebet");
   });
 });
-/*
-app.post("/choice",function(req, res) {
-  const {ID , amount , matchid , choice} = req.body;
-  var sql = `SELECT * FROM rated_matches WHERE rm_match_id = ? LIMIT 1`;
 
-  db.get(sql, [matchid], (err, data) => {
-    if (err) throw err;
 
-    if (data === undefined) {
-      alert("No matches of this category");
-      return;
-    }
 
-    // Insert a row into the account table for a correct choice
-    if (data.rm_match_res === choice) {
-      var winnerId = data.rm_match_res === "white" ? data.rm_white_id : data.rm_black_id;
-      var loserId = data.rm_match_res === "black" ? data.rm_white_id : data.rm_black_id;
-      var sql = `INSERT INTO account VALUES(?,?,?,?,?,?,?,?,?,?,?)`;
 
-      db.run(sql, [
-        ID,
-        winnerId,
-        loserId,
-        data.rm_black_rating,
-        data.rm_white_rating,
-        "win",
-        amount,
-        matchid,
-        100,
-        2022-12-8,
-        choice
-      ], (err, data) => {
-        if (err) throw err;
-      });
-    }
-
-    // Update the balance for a correct choice
-    if (data.rm_match_res === choice) {
-      var sql = `SELECT acc_balance FROM account WHERE acc_accountid = ?`;
-      db.get(sql, [ID], (err, balance) => {
-        if (err) throw err;
-        var newBalance = balance + (2 * amount);
-        var sql = `UPDATE account SET acc_balance = ? WHERE acc_accountid = ?`;
-        db.run(sql, [newBalance, ID], (err, money) => {
-          if (err) throw err;
-        });
-      });
-    }
-  });
-});
-
- */
 app.post("/makebet",function(req, res) {
   const {emailAddress} = req.body;
    var sql="SELECT * FROM rated_matches WHERE rm_white_id != ? AND rm_black_id != ? AND rm_white_rating > 1600 AND rm_black_rating >1600 ORDER BY random() LIMIT 1";
@@ -361,7 +313,7 @@ app.post("/inputGame", (req, res) => {
           if (err) {
             // If an error occurs, log it and send an error response to the client
             console.error(err);
-            res.send({ error: "An error occurred while adding the account" });
+            res.send({ error: "An error occurred while adding the game to the database" });
             return;
           }
 
@@ -382,7 +334,13 @@ app.get("/openings",function(req, res) {
 });
  });
 
-
+ app.get("/openings",function(req, res) {
+  var sql='SELECT * FROM opening limit 200';
+  db.all(sql, function (err, data) {
+  if (err) throw err;
+  res.render('opening', { title: 'Opening List', index: data});
+});
+ });
 
  
 
@@ -396,8 +354,22 @@ app.get("/openings",function(req, res) {
  });
 
 
+ app.get("/q1",function(req, res) {
+  var sql='SELECT * FROM leaderboard JOIN account ON lb_player_id = acc_accountid WHERE lb_wins + lb_losses + lb_draws >= 30 AND lb_overall_winrate >= 0.4 AND acc_balance >= 5000 ORDER BY lb_overall_winrate DESC LIMIT 10;';
+  db.all(sql, function (err, data) {
+  if (err) throw err;
+  res.render('generalQuery1', { title: 'Opening List', index: data});
+});
+ });
 
- 
+
+ app.get("/q2",function(req, res) {
+  var sql = "SELECT op_name, COUNT(*) AS total_matches, AVG(lb_overall_winrate) AS avg_win_rate, AVG(lb_rating) AS avg_rating FROM rated_matches JOIN opening ON rm_opening = op_name JOIN leaderboard ON lb_player_id = rm_white_id OR lb_player_id = rm_black_id GROUP BY op_name limit 100;"
+  db.all(sql, function (err, data) {
+  if (err) throw err;
+  res.render('generalQuery2', { title: 'Opening List', index: data});
+});
+ });
  
  
  // Import
