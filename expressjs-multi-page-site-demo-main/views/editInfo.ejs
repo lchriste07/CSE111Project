@@ -8,15 +8,15 @@
 </head>
 <body>
     <div class="table-data">
-<h2>List of All Ranked Matches</h2>
+<h2>Account Details</h2>
     <table border="1">
         <tr>
 
-            <th>Match ID       | </th>
-            <th>Opening       | </th>
-            <th>White Player ID   |</th>
-            <th>Black Player ID   |</th>
-            <th>White Player Rating   |</th>
+            <th>User ID       | </th>
+            <th>DOB       | </th>
+            <th>Email     |</th>
+            <th>Current Rating   |</th>
+            <th>Account Balance   |</th>
         
         </tr>
         
@@ -30,7 +30,7 @@
             <td><%=data.acc_dateofbirth %></td>
             <td><%=data.acc_email %></td>
             <td><%=data.acc_rating %></td>
-            <td><%=data.acc_balance %></td>
+            <td><%="$" + data.acc_balance %></td>
            
 
             
