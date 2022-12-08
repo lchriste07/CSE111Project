@@ -108,6 +108,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,17 +116,19 @@
 </head>
 <body>
     <div class="table-data">
-<h2>Leaderboard Ranking</h2>
+<h2>Match History</h2>
     <table border="1">
         <tr>
-            <th>Index         |</th>
-            <th>User ID       | </th>
-            <th>Win Rate   |</th>
-            <th>Wins   |</th>
-            <th>Losses   |</th>
-            <th>Draws    |</th>
-            <th>Rated Match History    |</th>
-            <th>Unrated Match History    |</th>
+          <th>Index         |</th>
+          <th>Match ID       | </th>
+          <th>Opening       | </th>
+          <th>White Player ID   |</th>
+          <th>Black Player ID   |</th>
+          <th>White Player Rating   |</th>
+          <th>Black Player Rating    |</th>
+          <th># of turns     |</th>
+          <th>Move List     |</th>
+          <th>Match Result    | </th>
         </tr>
         
         <%
@@ -134,16 +137,17 @@
         index.forEach(function(data){
         %>
         <tr>
-            <td><%=i; %></td>
-            <td><%=data.lb_player_id %></td>
-            <td><%=data.lb_overall_winrate %></td>
-            <td><%=data.lb_wins %></td>
-            <td><%=data.lb_losses %></td>
-            <td><%=data.lb_draws %></td>
-            <td><a href="/matchhistoryrated/?ID=<%=data.lb_player_id%>">Rated Match History</a></td>
-            <td><a href="/matchhistoryunrated/?ID=<%=data.lb_player_id%>">Unrated Match History</a></td>
-
-        </tr>
+          <td><%=i; %></td>
+          <td><%=data.rm_match_id %></td>
+          <td><%=data.rm_opening %></td>
+          <td><%=data.rm_white_id %></td>
+          <td><%=data.rm_black_id %></td>
+          <td><%=data.rm_white_rating %></td>
+          <td><%=data.rm_black_rating %></td>
+          <td><%=data.rm_turns %></td>
+          <td><%=data.rm_movelist %></td>
+          <td><%=data.rm_match_res %></td>
+                  </tr>
         <%  i++; }) %>
         <% } else{ %>
             <tr>

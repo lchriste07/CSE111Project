@@ -1,6 +1,4 @@
 
-
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -107,6 +105,41 @@
 </html>
 
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple registration form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+   
+  </head>
+  <body>
+    <div class="main-block">
+      <h3>Make Your Choice</h3>
+      <h3>Based on the Match Below</h3>
+      <form action="/choice" method="POST">
+        <hr>
+        <h4>ID</h4>
+        <input type="text" name="ID" id="ID" />
+        <h4>Amount</h4>
+        <input type="number" name="amount" id="amount" />
+        <h4>Match ID</h4>
+        <input type="text" name="matchid" id="matchid" />
+        <h4>Choice</h4>
+        <input type="text" name="choice" id="choice" />
+        <p>Black , White , or Draw</p>
+        <hr>
+   
+        <hr>
+        <div class="btn-block">
+          <button type="submit" href="/">Submit</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -115,17 +148,16 @@
 </head>
 <body>
     <div class="table-data">
-<h2>Leaderboard Ranking</h2>
+<h2>Betting</h2>
     <table border="1">
         <tr>
-            <th>Index         |</th>
-            <th>User ID       | </th>
-            <th>Win Rate   |</th>
-            <th>Wins   |</th>
-            <th>Losses   |</th>
-            <th>Draws    |</th>
-            <th>Rated Match History    |</th>
-            <th>Unrated Match History    |</th>
+          <th>Index         |</th>
+          <th>Match ID       | </th>
+          <th>White Player ID   |</th>
+          <th>Black Player ID   |</th>
+          <th>White Player Rating   |</th>
+          <th>Black Player Rating    |</th>
+
         </tr>
         
         <%
@@ -134,16 +166,13 @@
         index.forEach(function(data){
         %>
         <tr>
-            <td><%=i; %></td>
-            <td><%=data.lb_player_id %></td>
-            <td><%=data.lb_overall_winrate %></td>
-            <td><%=data.lb_wins %></td>
-            <td><%=data.lb_losses %></td>
-            <td><%=data.lb_draws %></td>
-            <td><a href="/matchhistoryrated/?ID=<%=data.lb_player_id%>">Rated Match History</a></td>
-            <td><a href="/matchhistoryunrated/?ID=<%=data.lb_player_id%>">Unrated Match History</a></td>
-
-        </tr>
+          <td><%=i; %></td>
+          <td><%=data.rm_match_id %></td>
+          <td><%=data.rm_white_id %></td>
+          <td><%=data.rm_black_id %></td>
+          <td><%=data.rm_white_rating %></td>
+          <td><%=data.rm_black_rating %></td>
+                  </tr>
         <%  i++; }) %>
         <% } else{ %>
             <tr>
