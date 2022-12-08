@@ -18,6 +18,7 @@
   },
   "homepage": "https://autumnchris-express-site-demo.herokuapp.com",
   "dependencies": {
+    "alert": "^5.1.2",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.1",

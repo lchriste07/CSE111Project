@@ -398,8 +398,6 @@ app.get("/openings",function(req, res) {
  
  // Import
 const url = require("url");
-const { CommandInteractionOptionResolver } = require("discord.js");
-
 
 /**
  * Server Activation
