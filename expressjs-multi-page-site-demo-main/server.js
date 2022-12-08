@@ -286,45 +286,63 @@ app.get("/inputGame", (req, res) => {
 });
 
 app.post("/inputGame", (req, res) => {
-  const { ID, DOB, emailAddress } = req.body;
-  console.log(ID);
-  console.log(DOB);
-  // Construct a SQL query to check whether the email address already exists in the table
-  var sql = `SELECT * FROM account WHERE acc_email = ?`;
-
-  // Use the db.get method to run the query and retrieve the data from the table
-  db.get(sql, [emailAddress], function (err, data) {
-    if (err) {
-      // If an error occurs, log it and send an error response to the client
-      console.error(err);
-      res.send({ error: "An error occurred while accessing the database" });
-      return;
-    }
-
-    if (data) {
-      // If the email address already exists in the table, send an error response to the client
-      res.send({ error: "This email already exists in this table" });
-    } else {
-      // Otherwise, insert a new row into the account table
+  const { ID, opening, whiteid , blackid ,whiterating ,blackrating ,turncount, movelist ,matchres } = req.body;
+  
       db.run(
-        `INSERT INTO account VALUES(?,?,?,?,?)`,
-        [ID, DOB, emailAddress, 0, 0],
+        `INSERT INTO rated_matches VALUES(?,?,?,?,?,?,?,?,?)`,
+        [ID, opening, whiteid , blackid ,whiterating ,blackrating ,turncount, movelist ,matchres],
         function (err) {
           if (err) {
-            // If an error occurs, log it and send an error response to the client
             console.error(err);
-            res.send({ error: "An error occurred while adding the game to the database" });
-            return;
+            if(matchres === "white"){
+              var sql="SELECT * FROM leaderboard WHERE lb_player_id = ? ";
+              db.all(sql, [whiteid] ,(err, data) =>{
+                if (err) throw err;
+                var sql = `UPDATE leaderboard SET lb_wins = ? , lb_overall_winrate = ? WHERE lb_player_id = ?`;
+                  db.run(sql, [data.lb_wins + 1, (data.lb_wins + 1) / data.lb_losses], (err, money) => {
+              if (err) throw err;
+            });
+              });
+              var sql="SELECT * FROM leaderboard WHERE lb_player_id = ? ";
+              db.all(sql, [blackid] ,(err, data) =>{
+                if (err) throw err;
+                var sql = `UPDATE leaderboard SET lb_losses = ? , lb_overall_winrate = ? WHERE lb_player_id = ?`;
+                  db.run(sql, [data.lb_losses + 1, data.lb_wins / (data.lb_losses + 1)], (err, money) => {
+              if (err) throw err;
+              alert("Successfully Added new Data to table. ")
+              res.redirect("/");
+            });
+              });
+            }else{
+              var sql="SELECT * FROM leaderboard WHERE lb_player_id = ? ";
+              db.all(sql, [blackid] ,(err, data) =>{
+                if (err) throw err;
+                var sql = `UPDATE leaderboard SET lb_wins = ? , lb_overall_winrate = ? WHERE lb_player_id = ?`;
+                  db.run(sql, [data.lb_wins + 1, (data.lb_wins + 1) / data.lb_losses], (err, money) => {
+              if (err) throw err;
+            });
+              });
+              var sql="SELECT * FROM leaderboard WHERE lb_player_id = ? ";
+              db.all(sql, [whiteid] ,(err, data) =>{
+                if (err) throw err;
+                var sql = `UPDATE leaderboard SET lb_losses = ? , lb_overall_winrate = ? WHERE lb_player_id = ?`;
+                  db.run(sql, [data.lb_losses + 1, data.lb_wins / (data.lb_losses + 1)], (err, money) => {
+              if (err) throw err;
+              alert("Successfully Added new Data to table. ")
+              res.redirect("/");
+            });
+              });
+            }
+           
           }
 
-          // Send a success response to the client
-          res.redirect("/");
         }
       );
-    }
-  });
-});
 
+    }
+  );
+
+ 
 
 app.get("/openings",function(req, res) {
   var sql='SELECT * FROM opening limit 200';
@@ -370,6 +388,12 @@ app.get("/openings",function(req, res) {
   res.render('generalQuery2', { title: 'Opening List', index: data});
 });
  });
+
+ 
+
+
+
+ 
  
  
  // Import
