@@ -1,6 +1,4 @@
 
-
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -100,54 +98,48 @@
 </html>
 
 
+  
+  
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <title>General Purpose Query 2</title>
+  </head>
+  <body>
+      <div class="table-data">
+  <h2>General Query 2 : </h2>
+      <table border="1">
+          <tr>
+              <th>Index         |</th>
+              <th>Opening Name       | </th>
+              <th>Total Matches  |</th>
+              <th>Avg. Winrate   |</th>
+              <th>Avg. Rating   |</th>
+          </tr>
+          
+          <%
+          if(index.length!=0){
+          var i=1;
+          index.forEach(function(data){
+          %>
+          <tr>
+              <td><%=i; %></td>
+              <td><%=data.op_name %></td>
+              <td><%=data.total_matches %></td>
+              <td><%=data.avg_win_rate %></td>
+              <td><%=data.avg_rating %></td>
+              <td><%=data.lb_draws %></td>
+  
+          </tr>
+          <%  i++; }) %>
+          <% } else{ %>
+              <tr>
+                  <td colspan="7">No Data Found</td>
+              </tr>
+          <% } %>
+      </table>
+      </div>
+  </body>
+  </html>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Leaderboard Ranking</title>
-</head>
-<body>
-    <div class="table-data">
-<h2>List of All Ranked Matches</h2>
-    <table border="1">
-        <tr>
-            <th>Index         |</th>
-            <th>Match ID       | </th>
-            <th>Opening       | </th>
-            <th>White Player ID   |</th>
-            <th>Black Player ID   |</th>
-            <th>White Player Rating   |</th>
-            <th>Black Player Rating    |</th>
-            <th># of turns     |</th>
-            <th>Match Result    | </th>
-        </tr>
-        
-        <%
-        if(index.length!=0){
-        var i=1;
-        index.forEach(function(data){
-        %>
-        <tr>
-            <td><%=i; %></td>
-            <td><%=data.rm_match_id %></td>
-            <td><%=data.rm_opening %></td>
-            <td><a href="/matchhistoryrated/?ID=<%=data.rm_white_id%>"><%=data.rm_white_id %></a></td>
-            <td><a href="/matchhistoryrated/?ID=<%=data.rm_black_id%>"><%=data.rm_black_id %></a></td>
-            <td><%=data.rm_white_rating %></td>
-            <td><%=data.rm_black_rating %></td>
-            <td><%=data.rm_turns %></td>
-            <td><%=data.rm_match_res %></td>
-
-            
-        </tr>
-        <%  i++; }) %>
-        <% } else{ %>
-            <tr>
-                <td colspan="7">No Data Found</td>
-            </tr>
-        <% } %>
-    </table>
-    </div>
-</body>
-</html>
+  <h4>To retrieve the total number of matches played using each opening, along with the win rate and average rating of the players who played those openings, you could use the following query:</h4>

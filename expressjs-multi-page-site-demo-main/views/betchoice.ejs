@@ -1,7 +1,5 @@
 
 
-
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -46,7 +44,12 @@
             </li>
             <li class="nav-item">
               <a href="account" class="nav-link" target="_self">
-                Account Balances
+                Account Details
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="makebet" class="nav-link" target="_self">
+                Betting 
               </a>
             </li>
             <li class="nav-item">
@@ -70,11 +73,18 @@
               </a>
             </li>
               </li>
-            <li class="nav-item">
-              <a href="search" class="nav-link" target="_self">
-                Search 
-              </a>
+              <li class="nav-item">
+                <a href="inputUser" class="nav-link" target="_self">
+                  Input New User 
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="inputGame" class="nav-link" target="_self">
+                  Input New Match 
+                </a>
+              </li>
             </li>
+          
           </ul>
         </div>
       </div>
@@ -90,6 +100,41 @@
 
 
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple registration form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+   
+  </head>
+  <body>
+    <div class="main-block">
+      <h3>Make Your Choice</h3>
+      <h3>Based on the Match Below</h3>
+      <form action="/choice" method="POST">
+        <hr>
+        <h4>ID</h4>
+        <input type="text" name="ID" id="ID" />
+        <h4>Amount</h4>
+        <input type="number" name="amount" id="amount" />
+        <h4>Match ID</h4>
+        <input type="text" name="matchid" id="matchid" />
+        <h4>Choice</h4>
+        <input type="text" name="choice" id="choice" />
+        <p>Black , White , or Draw</p>
+        <hr>
+   
+        <hr>
+        <div class="btn-block">
+          <button type="submit" href="/">Submit</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,18 +143,16 @@
 </head>
 <body>
     <div class="table-data">
-<h2>Match History</h2>
+<h2>Betting</h2>
     <table border="1">
         <tr>
           <th>Index         |</th>
           <th>Match ID       | </th>
-          <th>Opening       | </th>
           <th>White Player ID   |</th>
           <th>Black Player ID   |</th>
           <th>White Player Rating   |</th>
           <th>Black Player Rating    |</th>
-          <th># of turns     |</th>
-          <th>Match Result    | </th>
+
         </tr>
         
         <%
@@ -120,13 +163,10 @@
         <tr>
           <td><%=i; %></td>
           <td><%=data.rm_match_id %></td>
-          <td><%=data.rm_opening %></td>
           <td><%=data.rm_white_id %></td>
           <td><%=data.rm_black_id %></td>
           <td><%=data.rm_white_rating %></td>
           <td><%=data.rm_black_rating %></td>
-          <td><%=data.rm_turns %></td>
-          <td><%=data.rm_match_res %></td>
                   </tr>
         <%  i++; }) %>
         <% } else{ %>

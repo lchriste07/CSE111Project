@@ -1,6 +1,5 @@
 
 
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -45,7 +44,12 @@
             </li>
             <li class="nav-item">
               <a href="account" class="nav-link" target="_self">
-                Account Balances
+                Account Details
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="makebet" class="nav-link" target="_self">
+                Betting 
               </a>
             </li>
             <li class="nav-item">
@@ -69,11 +73,18 @@
               </a>
             </li>
               </li>
-            <li class="nav-item">
-              <a href="search" class="nav-link" target="_self">
-                Search 
-              </a>
+              <li class="nav-item">
+                <a href="inputUser" class="nav-link" target="_self">
+                  Input New User 
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="inputGame" class="nav-link" target="_self">
+                  Input New Match 
+                </a>
+              </li>
             </li>
+          
           </ul>
         </div>
       </div>
@@ -86,6 +97,8 @@
     <link rel="stylesheet" type="text/css" href="style.css " media="screen" />
   </body>
 </html>
+
+
 
 
 <!DOCTYPE html>
@@ -118,8 +131,8 @@
             <td><%=i; %></td>
             <td><%=data.un_match_id %></td>
             <td><%=data.un_opening %></td>
-            <td><%=data.un_white_id %></td>
-            <td><%=data.un_black_id %></td>
+            <td><a href="/matchhistoryunrated/?ID=<%=data.un_white_id%>"><%=data.un_white_id %></a></td>
+            <td><a href="/matchhistoryunrated/?ID=<%=data.un_black_id%>"><%=data.un_black_id %></a></td>
             <td><%=data.un_white_rating %></td>
             <td><%=data.un_black_rating %></td>
             <td><%=data.un_turns %></td>

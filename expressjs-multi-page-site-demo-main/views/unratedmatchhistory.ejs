@@ -102,6 +102,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,18 +111,19 @@
 </head>
 <body>
     <div class="table-data">
-<h2>List of All Ranked Matches</h2>
+<h2>Match History</h2>
     <table border="1">
         <tr>
-            <th>Index         |</th>
-            <th>Match ID       | </th>
-            <th>Opening       | </th>
-            <th>White Player ID   |</th>
-            <th>Black Player ID   |</th>
-            <th>White Player Rating   |</th>
-            <th>Black Player Rating    |</th>
-            <th># of turns     |</th>
-            <th>Match Result    | </th>
+          <th>Index         |</th>
+          <th>Match ID       | </th>
+          <th>Opening       | </th>
+          <th>White Player ID   |</th>
+          <th>Black Player ID   |</th>
+          <th>White Player Rating   |</th>
+          <th>Black Player Rating    |</th>
+          <th># of turns     |</th>
+          <th>Move List     |</th>
+          <th>Match Result    | </th>
         </tr>
         
         <%
@@ -129,18 +132,17 @@
         index.forEach(function(data){
         %>
         <tr>
-            <td><%=i; %></td>
-            <td><%=data.rm_match_id %></td>
-            <td><%=data.rm_opening %></td>
-            <td><a href="/matchhistoryrated/?ID=<%=data.rm_white_id%>"><%=data.rm_white_id %></a></td>
-            <td><a href="/matchhistoryrated/?ID=<%=data.rm_black_id%>"><%=data.rm_black_id %></a></td>
-            <td><%=data.rm_white_rating %></td>
-            <td><%=data.rm_black_rating %></td>
-            <td><%=data.rm_turns %></td>
-            <td><%=data.rm_match_res %></td>
-
-            
-        </tr>
+          <td><%=i; %></td>
+          <td><%=data.un_match_id %></td>
+          <td><%=data.un_opening %></td>
+          <td><%=data.un_white_id %></td>
+          <td><%=data.un_black_id %></td>
+          <td><%=data.un_white_rating %></td>
+          <td><%=data.un_black_rating %></td>
+          <td><%=data.un_turns %></td>
+          <td><%=data.un_movelist %></td>
+          <td><%=data.un_match_res %></td>
+                  </tr>
         <%  i++; }) %>
         <% } else{ %>
             <tr>
